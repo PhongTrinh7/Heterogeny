@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4f5314430a602f74ca3fceacae0bf8ff
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - caster: {instanceID: 0}
+  - sprite: {instanceID: 0}
+  - rangeIndicator: {fileID: 1276536637320137985, guid: e2e1bd8589233af4e946e6c2c064f8fe,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

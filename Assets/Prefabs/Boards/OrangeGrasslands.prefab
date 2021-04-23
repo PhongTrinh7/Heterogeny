@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &290219133174944740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 933805898004001258}
+  - component: {fileID: 8866726575693543777}
+  m_Layer: 0
+  m_Name: OrangeGrasslands
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &933805898004001258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290219133174944740}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8866726575693543777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290219133174944740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dca6d0c840eb434ea5e89044ab19f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rows: 8
+  columns: 12
+  outerWallTiles:
+  - {fileID: 8897002974188801032, guid: 8b63d92d82871b04e81eca8480604a90, type: 3}
+  - {fileID: 2517412029273860145, guid: 7038e0c687954d54eb8ceb53b68bff82, type: 3}
+  - {fileID: 7178276071310056580, guid: 54237dc60a2bc5047b09a50e00c4b73d, type: 3}
+  - {fileID: 8331703964812101042, guid: 1c4ac70053ce56d4d8d1282a3d62459b, type: 3}
+  floorTiles:
+  - {fileID: 2068667036111058926, guid: 6027c9c817b8a124bac7c8745bf97b03, type: 3}
+  - {fileID: 8641682871637039630, guid: b72a1740285d6da45afb14e105dc5ed3, type: 3}
+  - {fileID: 3279678706443202363, guid: d9b77a27e5197fe4d92347392b85a0f4, type: 3}
+  - {fileID: 7855386216152020740, guid: 40f2b4637f061c945884c1679828a961, type: 3}
+  - {fileID: 6944539849495659538, guid: 221bfa76f018c254da66bca79f71b210, type: 3}
+  - {fileID: 6176044516160249859, guid: 40d52cf60c458e343a0cd2ad4427df78, type: 3}
+  - {fileID: 3817463196710384880, guid: 56043e5fad323524fbe6e1f577e63654, type: 3}
+  - {fileID: 5828887658808666675, guid: da5de48dc23fcf44785e22e0a7734ff3, type: 3}
+  - {fileID: 7285566299274040495, guid: 5d81409f3315d754e89995ffe0767006, type: 3}
+  - {fileID: 2068667036111058926, guid: 6027c9c817b8a124bac7c8745bf97b03, type: 3}
+  - {fileID: 2068667036111058926, guid: 6027c9c817b8a124bac7c8745bf97b03, type: 3}
+  - {fileID: 2068667036111058926, guid: 6027c9c817b8a124bac7c8745bf97b03, type: 3}
+  - {fileID: 2068667036111058926, guid: 6027c9c817b8a124bac7c8745bf97b03, type: 3}
+  wallTiles:
+  - {fileID: 6017281346346409882, guid: 86a0f55ce2cd7e64eb22467a4849b591, type: 3}
+  - {fileID: 8057993825433282393, guid: 5149729b70d0b044ba0ae9ac19f93492, type: 3}
+  unwalkables: []
+  backgroundMid: {fileID: 4435419453623608610, guid: 594ddd729a509d944bf8b6cccd6aa343,
+    type: 3}
+  units: []

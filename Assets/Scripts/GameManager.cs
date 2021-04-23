@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.IO;
@@ -24,11 +25,16 @@ public class GameManager : Manager<GameManager>
     public Player[] playerChars;
     public Enemy[] enemyChars;
 
+    //State management
     private GameState state;
+
+    //State listeners
+    public UnityEvent OnBattleStart = new UnityEvent();
+
 
     public void Start()
     {
-        StartBattle();
+        //StartBattle();
     }
 
     public void StartBattle()
@@ -36,6 +42,8 @@ public class GameManager : Manager<GameManager>
         state = GameState.BATTLE;
         battleManager.SetActive(true);
         BattleManager.Instance.StartBattle(boards, playerChars, enemyChars);
+        UIManager.Instance.ShowBattleUI(true);
+        //OnBattleStart.Invoke();
     }
 
     public void MainMenu()
@@ -47,6 +55,7 @@ public class GameManager : Manager<GameManager>
     {
         StartCoroutine(timeManipCoroutine(time));
     }
+
     public IEnumerator timeManipCoroutine(float time)
     {
         Debug.Log("stop");
@@ -60,7 +69,7 @@ public class GameManager : Manager<GameManager>
 
     private void Update()
     {
-        if (Input.GetKeyDown("p"))
+        if (Input.GetKeyDown("e"))
         {
             StartBattle();
         }
