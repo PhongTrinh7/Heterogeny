@@ -5,12 +5,12 @@ using UnityEngine;
 public class MovingObject : MonoBehaviour
 {
     //Collision detection
-    private BoxCollider2D boxCollider;
-    private Rigidbody2D rb2D;
+    public BoxCollider2D boxCollider;
+    public Rigidbody2D rb2D;
     public LayerMask blockingLayer;
 
     //Animations
-    protected Animator anim;
+    public Animator anim;
 
     //For highlighting
     public Color ogColor;
@@ -29,10 +29,7 @@ public class MovingObject : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        boxCollider = GetComponent<BoxCollider2D>(); // for collision
-        rb2D = GetComponent<Rigidbody2D>(); // for collision
-        anim = GetComponent<Animator>(); // get animator
-        ogColor = GetComponent<SpriteRenderer>().color; // get original Color
+        Debug.Log("I'm starting!");
 
         currentHealth = maxHealth;
 
@@ -107,17 +104,14 @@ public class MovingObject : MonoBehaviour
         }
     }
 
-    public void highlight(bool bHighlight, Color highlightColor)
+    public void Highlight(Color highlightColor)
     {
-        if (bHighlight)
-        {
-            GetComponent<SpriteRenderer>().color = highlightColor;
+        GetComponent<SpriteRenderer>().color = highlightColor;
+    }
 
-        }
-        else
-        {
-            GetComponent<SpriteRenderer>().color = ogColor;
-        }
+    public void Unhighlight()
+    {
+        GetComponent<SpriteRenderer>().color = ogColor;
     }
 
     protected virtual void Death()

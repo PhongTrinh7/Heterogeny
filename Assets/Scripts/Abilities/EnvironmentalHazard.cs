@@ -16,9 +16,8 @@ public abstract class EnvironmentalHazard : MonoBehaviour
 
     protected BoxCollider2D boxCollider;
 
-    void Awake()
+    void Start()
     {
-        boxCollider = GetComponent<BoxCollider2D>(); // for collision
         durationTimer = duration;
     }
 

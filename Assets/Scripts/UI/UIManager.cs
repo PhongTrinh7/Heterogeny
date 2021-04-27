@@ -18,6 +18,9 @@ public class UIManager : Manager<UIManager>
     [SerializeField] public Button abilityButton4;
     [SerializeField] public Button endTurnButton;
 
+    //Turn order
+    public GameObject turnOrderPanel;
+
     private void Start()
     {
         //GameManager.Instance.OnBattleStart.AddListener(ShowBattleUI);
@@ -40,7 +43,6 @@ public class UIManager : Manager<UIManager>
         //Only check for usability if turning UI to interactable.
         if (b)
         {
-            Debug.Log("Run");
             UpdateActiveUnitAbilities();
         }
 
@@ -61,7 +63,7 @@ public class UIManager : Manager<UIManager>
     {
         Player activePlayer = BattleManager.Instance.activeUnit as Player;
 
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < activePlayer.abilities.Count; i++)
         {
             if (activePlayer.CurrentEnergy < activePlayer.abilities[i].cost)
             {
@@ -74,5 +76,23 @@ public class UIManager : Manager<UIManager>
             //abilityButtons[i].GetComponent<Image>().sprite = activePlayer.abilities[i].sprite;
             abilityButtons[i].GetComponent<Image>().fillAmount = activePlayer.abilities[i].cooldownFill;
         }
+    }
+
+    public void UpdateTurnOrder(List<Unit> units)
+    {
+        foreach (Transform child in turnOrderPanel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (Unit unit in units)
+        {
+            Instantiate(unit.portrait, turnOrderPanel.transform);
+        }
+    }
+
+    public void ShowBattleEnd(bool win)
+    {
+
     }
 }

@@ -4,19 +4,23 @@ using UnityEngine;
 
 public class RangeIndicator : MonoBehaviour
 {
-    private Collider2D col;
+    public BoxCollider2D selfCollider;
+    public Color highlightColor;
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        col = GetComponent<BoxCollider2D>();
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("collided");
+            collision.gameObject.GetComponent<MovingObject>().Highlight(highlightColor);
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D collider)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collider.gameObject.CompareTag("Player") || collider.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
         {
-            collider.gameObject.GetComponent<MovingObject>().highlight(true, Color.red);
+            collision.gameObject.GetComponent<MovingObject>().Unhighlight();
         }
     }
 }

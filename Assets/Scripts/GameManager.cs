@@ -17,12 +17,13 @@ public class GameManager : Manager<GameManager>
 
     [SerializeField] private CameraController cameraController;
     [SerializeField] private GameObject overworldManager;
-    [SerializeField] private GameObject battleManager;
+    [SerializeField] private BattleManager battleManager;
     //public GameObject overworldMusic;
     //public GameObject battleMusic;
 
     public Board[] boards;
-    public Player[] playerChars;
+    public Player[] playerCharsReference;
+    public List<Player> playerChars;
     public Enemy[] enemyChars;
 
     //State management
@@ -35,15 +36,26 @@ public class GameManager : Manager<GameManager>
     public void Start()
     {
         //StartBattle();
+        foreach (Player p in playerCharsReference)
+        {
+            //Store position as unwalkable for pathfinding.
+            Player pc = Instantiate(p, new Vector3(0, 0, 0), Quaternion.identity);
+            playerChars.Add(pc);
+            pc.gameObject.SetActive(false);
+        }
     }
 
     public void StartBattle()
     {
         state = GameState.BATTLE;
-        battleManager.SetActive(true);
-        BattleManager.Instance.StartBattle(boards, playerChars, enemyChars);
-        UIManager.Instance.ShowBattleUI(true);
-        //OnBattleStart.Invoke();
+        battleManager.enabled = true;
+        BattleManager.Instance.StartBattle(boards, enemyChars);
+    }
+
+    public void EndBattle()
+    {
+        battleManager.enabled = false;
+        state = GameState.OVERWORLD;
     }
 
     public void MainMenu()

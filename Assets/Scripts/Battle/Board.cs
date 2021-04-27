@@ -16,7 +16,6 @@ public class Board : MonoBehaviour
     public GameObject backgroundMid;
 
     //Units
-    private Player[] players;
     private Enemy[] enemies;
     public List<Unit> units;
 
@@ -24,9 +23,8 @@ public class Board : MonoBehaviour
     private Transform boardHolder;            //A variable to store a reference to the transform of our Board object.
     private List<Vector3> gridPositions;      //A list of possible locations to place tiles.
 
-    public void SetUp(Player[] players, Enemy[] enemies)
+    public void SetUp(Enemy[] enemies)
     {
-        this.players = players;
         this.enemies = enemies;
 
         //Reset our list of gridpositions.
@@ -141,11 +139,17 @@ public class Board : MonoBehaviour
     void LayoutUnits()
     {
         units = new List<Unit>();
-
-        for (int i = 0; i < players.Length; i++)
+        int y = 0;
+        foreach (Player pc in GameManager.Instance.playerChars)
         {
-            //Store position as unwalkable for pathfinding.
-            units.Add(Instantiate(players[i], new Vector3(0, rows - 1 - 3 * i, 0), Quaternion.identity));
+            if (pc.currentHealth > 0)
+            {
+                //Store position as unwalkable for pathfinding.
+                pc.transform.position = new Vector3(0, rows - 1 - 3 * y, 0);
+                pc.gameObject.SetActive(true);
+                units.Add(pc);
+                y++;
+            }
         }
 
         for (int i = 0; i < enemies.Length; i++)

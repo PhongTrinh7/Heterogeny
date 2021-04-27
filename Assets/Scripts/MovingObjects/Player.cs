@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Player : Unit
 {
-    // Start is called before the first frame update
-    protected override void Start()
+    protected override void OnEnable()
     {
-        base.Start();
+        base.OnEnable();
         ChangeFacingDirection(new Vector2(1, 0));
     }
 
@@ -43,19 +42,19 @@ public class Player : Unit
             else
             {
                 //Keyboard Input
-                if (Input.GetKeyDown("w"))
+                if (Input.GetKey("w"))
                 {
                     StartCoroutine(Move(0, 1));
                 }
-                else if (Input.GetKeyDown("a"))
+                else if (Input.GetKey("a"))
                 {
                     StartCoroutine(Move(-1, 0));
                 }
-                else if (Input.GetKeyDown("s"))
+                else if (Input.GetKey("s"))
                 {
                     StartCoroutine(Move(0, -1));
                 }
-                else if (Input.GetKeyDown("d"))
+                else if (Input.GetKey("d"))
                 {
                     StartCoroutine(Move(1, 0));
                 }
@@ -106,11 +105,5 @@ public class Player : Unit
         CurrentEnergy = Mathf.Clamp(CurrentEnergy + energyRegen, 0, maxEnergy);
         HandleCooldowns();
         UnitStateChange(UnitState.ACTIVE);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

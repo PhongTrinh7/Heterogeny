@@ -50,4 +50,9 @@ MonoBehaviour:
   - {fileID: 8866726575693543777, guid: a49ae98d7ef579e44a5b30adec90d600, type: 3}
   playerChars:
   - {fileID: 7769006196050213769, guid: 9ed1dd67667af4346bb469dab3e4ead3, type: 3}
-  enemyChars: []
+  - {fileID: 7769006196050213769, guid: 9ed1dd67667af4346bb469dab3e4ead3, type: 3}
+  enemyChars:
+  - {fileID: 8101120387355560915, guid: 39679cdfbba489e4f859044b3d1854fc, type: 3}
+  OnBattleStart:
+    m_PersistentCalls:
+      m_Calls: []

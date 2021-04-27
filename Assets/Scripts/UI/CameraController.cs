@@ -36,6 +36,9 @@ public class CameraController : MonoBehaviour
         newPosition.x = transform.position.x;
         newPosition.y = transform.position.y;
         newPosition.z = transform.position.z;
+
+        ogXCamBound = xCamBound;
+        ogYCamBound = yCamBound;
     }
 
     public void BattleCamera(Board board)

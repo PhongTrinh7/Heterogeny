@@ -867,7 +867,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7769006196050213772}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5502704739956111077}
@@ -886,26 +886,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbfac78d901c9f44c9b834f912bb517c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boxCollider: {fileID: 7769006196050213770}
+  rb2D: {fileID: 7769006196050213771}
   blockingLayer:
     serializedVersion: 2
     m_Bits: 256
-  ogColor: {r: 0, g: 0, b: 0, a: 0}
-  maxHealth: 2
-  currentHealth: 0
+  anim: {fileID: 132084417159427030}
+  ogColor: {r: 1, g: 1, b: 1, a: 1}
+  maxHealth: 20
+  currentHealth: 1
   healthBar: {fileID: 6026781698483514553}
   damageNumber: {fileID: 8887227401818310891, guid: 2822bbe08064d1b44b0bc34c0a15f75d,
     type: 3}
-  moveSpeed: 3
+  moveSpeed: 1
   launchSpeed: 5
-  state: 2
+  state: 0
   priorState: 2
   unitName: PlayerUnit
-  portrait: {fileID: 0}
+  portrait: {fileID: 2078314136722985333, guid: 5662638ba1d09a94c8ae36d90772ab28,
+    type: 3}
   energyBar: {fileID: 6007175448465538509}
+  spd: 0
   maxEnergy: 12
   energyRegen: 10
   abilitiesReference:
   - {fileID: 11400000, guid: 903df38076bd2114285b96470a4e42c0, type: 2}
+  - {fileID: 11400000, guid: efc6c712702ef41498be65a7f4b5c6c7, type: 2}
   abilities: []
   facingDirection: {x: 0, y: 0}
   moveCost: 1
@@ -951,8 +957,8 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_AngularDrag: 0
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1

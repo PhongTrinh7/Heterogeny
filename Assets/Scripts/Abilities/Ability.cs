@@ -35,8 +35,8 @@ public abstract class Ability : ScriptableObject
 
     //SFor showing the range
     public List<Vector2> aoe;
-    public List<GameObject> spawnedRangeIndicators;
-    public GameObject rangeIndicator;
+    public List<RangeIndicator> spawnedRangeIndicators;
+    public RangeIndicator rangeIndicator;
     public Color32 highlightColor;
 
     public virtual void OnEnable()
@@ -66,9 +66,9 @@ public abstract class Ability : ScriptableObject
     {
         aoe.Clear();
 
-        foreach (GameObject go in spawnedRangeIndicators)
+        foreach (RangeIndicator r in spawnedRangeIndicators)
         {
-            Destroy(go);
+            Destroy(r.gameObject);
         }
 
         spawnedRangeIndicators.Clear();

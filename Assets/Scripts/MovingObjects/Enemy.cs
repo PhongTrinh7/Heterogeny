@@ -49,10 +49,16 @@ public class Enemy : Unit
                 chosenPath = path;
             }
         }
-        foreach (PathNode pn in chosenPath)
+
+        if (currentHealth <= 0)
+        {
+            yield break;
+        }
+
+        /*foreach (PathNode pn in chosenPath)
         {
             Debug.Log(pn.coord);
-        }
+        }*/
 
         //SmoothMovement(chosenPath[chosenPath.Count - 1].coord, 1);
         EndTurn();

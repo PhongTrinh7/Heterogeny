@@ -34,48 +34,31 @@ public class BattleManager : Manager<BattleManager>
     private void Start()
     {
 
-        
     }
     private void OnEnable()
     {
-
+        UIManager.Instance.ShowBattleUI(true);
+        currentUnits = new List<Unit>();
+        currentUnwalkables = new List<Vector3>();
     }
 
-    public void StartBattle(Board[] boards, Player[] players, Enemy[] enemies)
+    public void StartBattle(Board[] boards, Enemy[] enemies)
     {
         //Set up the playing field.
         board = Instantiate(boards[Random.Range(0, boards.Length)]);
-        board.SetUp(players, enemies);
+        board.SetUp(enemies);
 
         cameraController.BattleCamera(board);
 
-        foreach (Unit unit in board.units)
-        {
-            currentUnits.Add(unit);
-
-            if (unit.CompareTag("Player"))
-            {
-                playerCount++;
-            }
-            else if (unit.CompareTag("Enemy"))
-            {
-                Enemy enemy = (Enemy)unit;
-                enemy.SetUpBoardKnowledge(board.rows, board.columns);
-                enemyCount++;
-            }
-        }
+        //Set up turn order.
+        SetUpTurnOrder(board.units);
 
         //Set up pathfinding.
-        currentUnwalkables = new List<Vector3>();
         UpdateUnwalkables();
 
-        turnCounter = -1;
+        turnCounter = 1;
 
         AdvanceTurn();
-
-        //activeUnit = currentUnits[0];
-        //Debug.Log(activeUnit.name);
-        //activeUnit.StartTurn();
     }
 
     public void AdvanceTurn()
@@ -89,27 +72,20 @@ public class BattleManager : Manager<BattleManager>
         controlLocked = true;
         UIManager.Instance.ListenForBattleUI(false);
 
-        //Next up in line goes.
-        turnCounter++;
-        
-        activeUnit = currentUnits[turnCounter%currentUnits.Count];
+        activeUnit = currentUnits[0];
         Debug.Log(activeUnit);
 
-        if (activeUnit.bDead)
-        {
-            AdvanceTurn();
-            yield break;
-        }
+        //Update the turn order UI panel.
+        UIManager.Instance.UpdateTurnOrder(currentUnits);
 
         //Center camera on active unit
         cameraController.CameraLookAt(activeUnit);
 
-        //Let effects run their course before freeing movement
-        yield return new WaitForSeconds(turnDelay);
-
         //Updates pathfinding based on current unit positions.
         UpdateUnwalkables();
 
+        //Let effects run their course before freeing movement
+        yield return new WaitForSeconds(turnDelay);
 
         activeUnit.StartTurn();
 
@@ -122,6 +98,28 @@ public class BattleManager : Manager<BattleManager>
         {
             //Give players control again.
             controlLocked = false;
+        }
+    }
+
+    public void SetUpTurnOrder(List<Unit> units)
+    {
+        units.Sort(SortBySpeed);
+        currentUnits.Clear();
+
+        foreach (Unit unit in units)
+        {
+            currentUnits.Add(unit);
+
+            if (unit.CompareTag("Player"))
+            {
+                playerCount++;
+            }
+            else if (unit.CompareTag("Enemy"))
+            {
+                Enemy enemy = (Enemy)unit;
+                enemy.SetUpBoardKnowledge(board.rows, board.columns);
+                enemyCount++;
+            }
         }
     }
 
@@ -148,6 +146,7 @@ public class BattleManager : Manager<BattleManager>
 
     public void UnitDeath(Unit unit)
     {
+        currentUnits.Remove(unit);
         unit.gameObject.SetActive(false); //Temporary, will change when death animations are added.
 
         if (unit is Player)
@@ -155,7 +154,7 @@ public class BattleManager : Manager<BattleManager>
             playerCount--;
             if (playerCount <= 0)
             {
-                EndBattle(true);
+                EndBattle(false);
                 return;
             }
         }
@@ -164,7 +163,7 @@ public class BattleManager : Manager<BattleManager>
             enemyCount--;
             if (enemyCount <= 0)
             {
-                EndBattle(false);
+                EndBattle(true);
                 return;
             }
         }
@@ -173,10 +172,15 @@ public class BattleManager : Manager<BattleManager>
         {
             AdvanceTurn();
         }
+        else
+        {
+            UIManager.Instance.UpdateTurnOrder(currentUnits);
+        }
     }
 
     public void EndBattle(bool win)
     {
+        controlLocked = true;
         UIManager.Instance.ShowBattleUI(false);
         if (win)
         {
@@ -186,11 +190,22 @@ public class BattleManager : Manager<BattleManager>
         {
             Debug.Log("Defeat");
         }
+        GameManager.Instance.EndBattle();
     }
 
     private void OnDisable()
     {
         cameraController.ResetCamera();
-        Destroy(board);
+        Destroy(board.gameObject);
+
+        foreach (Player pc in GameManager.Instance.playerChars)
+        {
+            pc.gameObject.SetActive(false);
+        }
+    }
+
+    int SortBySpeed(Unit u1, Unit u2)
+    {
+        return u1.spd.CompareTo(u2.spd);
     }
 }

@@ -1003,22 +1003,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22bcc84b6028a8d42b664e8d659be5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boxCollider: {fileID: 7601459812993036901}
+  rb2D: {fileID: 7601459812993036900}
   blockingLayer:
     serializedVersion: 2
     m_Bits: 256
-  ogColor: {r: 0, g: 0, b: 0, a: 0}
+  anim: {fileID: 250372567437425209}
+  ogColor: {r: 1, g: 1, b: 1, a: 1}
   maxHealth: 20
   currentHealth: 0
   healthBar: {fileID: 5841076992813147478}
   damageNumber: {fileID: 8887227401818310891, guid: 2822bbe08064d1b44b0bc34c0a15f75d,
     type: 3}
   moveSpeed: 1
-  launchSpeed: 1
+  launchSpeed: 5
   state: 0
   priorState: 0
   unitName: EnemyUnit
-  portrait: {fileID: 0}
+  portrait: {fileID: 5251499735850744835, guid: d0af9764b69dc084f9a080c99a786dca,
+    type: 3}
   energyBar: {fileID: 5904505722963932194}
+  spd: 0
   maxEnergy: 6
   energyRegen: 3
   abilitiesReference: []

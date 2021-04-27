@@ -30,6 +30,7 @@ public abstract class Unit : MovingObject
     public EnergyBar energyBar;
 
     //Unit stats.
+    public int spd;
     public int maxEnergy;
     protected int currentEnergy;
     public int CurrentEnergy
@@ -61,7 +62,6 @@ public abstract class Unit : MovingObject
     public List<StatusEffect> statuses;
     bool bStun;
     bool bImmobile;
-    public bool bDead;
 
     //Event for variable changes.
     UnityEvent OnVariableChange = new UnityEvent();
@@ -73,11 +73,14 @@ public abstract class Unit : MovingObject
 
         //UI setup.
         energyBar.SetMaxEnergy(maxEnergy);
-        currentEnergy = maxEnergy;
-        UpdateEnergy();
 
         OnVariableChange.AddListener(UpdateEnergy);
+    }
 
+    protected virtual void OnEnable()
+    {
+        currentEnergy = maxEnergy;
+        UpdateEnergy();
         RefreshAbilities();
     }
 
@@ -225,6 +228,8 @@ public abstract class Unit : MovingObject
     public void EndTurn()
     {
         state = UnitState.IDLE;
+        BattleManager.Instance.currentUnits.RemoveAt(0);
+        BattleManager.Instance.currentUnits.Add(this);
         BattleManager.Instance.AdvanceTurn();
     }
 
@@ -236,8 +241,7 @@ public abstract class Unit : MovingObject
     protected override void Death()
     {
         //Play animation or do whatever.
-        bDead = true;
-
+        
         //Inform the Battle Manager a Unit has died.
         BattleManager.Instance.UnitDeath(this);
     }

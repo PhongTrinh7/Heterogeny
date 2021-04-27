@@ -44,3 +44,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleUI: {fileID: 0}
+  abilityButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  abilityButton1: {fileID: 0}
+  abilityButton2: {fileID: 0}
+  abilityButton3: {fileID: 0}
+  abilityButton4: {fileID: 0}
+  endTurnButton: {fileID: 0}
+  turnOrderPanel: {fileID: 0}
