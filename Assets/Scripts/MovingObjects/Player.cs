@@ -102,8 +102,7 @@ public class Player : Unit
 
     public override void StartTurn()
     {
-        CurrentEnergy = Mathf.Clamp(CurrentEnergy + energyRegen, 0, maxEnergy);
-        HandleCooldowns();
+        base.StartTurn();
         UnitStateChange(UnitState.ACTIVE);
     }
 }

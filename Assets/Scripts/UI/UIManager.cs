@@ -87,8 +87,34 @@ public class UIManager : Manager<UIManager>
 
         foreach (Unit unit in units)
         {
-            Instantiate(unit.portrait, turnOrderPanel.transform);
+            Portrait portrait = Instantiate(unit.portrait, turnOrderPanel.transform);
+            portrait.character = unit;
+            unit.tempPortrait = portrait;
         }
+    }
+
+    public void HighlightUnit(Portrait portrait)
+    {
+        portrait.character.Highlight(Color.blue);
+        portrait.Highlight();
+    }
+
+    public void UnhighlightUnit(Portrait portrait)
+    {
+        portrait.character.Unhighlight();
+        portrait.Unhighlight();
+    }
+
+    public void HighlightPortrait(Unit unit)
+    {
+        unit.Highlight(Color.blue);
+        unit.tempPortrait.Highlight();
+    }
+
+    public void UnhighlightPortrait(Unit unit)
+    {
+        unit.Unhighlight();
+        unit.tempPortrait.Unhighlight();
     }
 
     public void ShowBattleEnd(bool win)

@@ -33,15 +33,22 @@ public abstract class Ability : ScriptableObject
     //Layermasks to check for
     public LayerMask layermask;
 
-    //SFor showing the range
+    //For showing the range
     public List<Vector2> aoe;
     public List<RangeIndicator> spawnedRangeIndicators;
     public RangeIndicator rangeIndicator;
     public Color32 highlightColor;
+    public Vector2 TileInFront
+    {
+        get
+        {
+            return (Vector2)caster.transform.position + caster.facingDirection;
+        }
+    }
 
     public virtual void OnEnable()
     {
-        highlightColor = new Color32(255, 0, 0, 120);
+        highlightColor = new Color32(255, 0, 0, 255);
         cooldownFill = 1;
     }
 
@@ -54,11 +61,19 @@ public abstract class Ability : ScriptableObject
     //Calculates range and shows it on the field
     public virtual void ShowRange()
     {
-        aoe.Add((Vector2)caster.transform.position + caster.facingDirection);
+        aoe.Add((Vector2) TileInFront);
 
         foreach (Vector2 xy in aoe)
         {
             spawnedRangeIndicators.Add(Instantiate(rangeIndicator, xy, Quaternion.identity, caster.transform));
+        }
+
+        foreach (RaycastHit2D hit in GetRaycastHitsForward(0))
+        {
+            if (hit.transform != null && hit.transform.CompareTag("Player") || hit.transform.CompareTag("Enemy"))
+            {
+                hit.transform.GetComponent<MovingObject>().Highlight(highlightColor);
+            }
         }
     }
 
@@ -117,16 +132,16 @@ public abstract class Ability : ScriptableObject
         }
     }
 
-    protected Vector2 GetForwardStartVector()
-    {
-        return (Vector2)caster.transform.position + caster.facingDirection;
-    }
-
     protected RaycastHit2D[] GetRaycastHitsForward(int range)
     {
-        Vector2 start = GetForwardStartVector();
+        Vector2 start = TileInFront;
         RaycastHit2D[] hits;
         caster.CastLineMaskDetect(start, start + caster.facingDirection * range, layermask, out hits);
         return hits;
+    }
+
+    protected RaycastHit2D GetRayCastHitAtLocation(Vector2 location)
+    {
+        return Physics2D.Linecast(location, location, layermask);
     }
 }

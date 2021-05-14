@@ -18,7 +18,20 @@ public class NothingPersonnel : Ability
         {
             spawnedRangeIndicators.Add(Instantiate(rangeIndicator, xy, Quaternion.identity, caster.transform));
         }
+
+        RaycastHit2D[] hits = GetRaycastHitsForward(2);
+
+        if (hits.Length > 0)
+        {
+            RaycastHit2D hit = hits[hits.Length - 1];
+
+            if (hit.transform != null && hit.transform.CompareTag("Player") || hit.transform.CompareTag("Enemy"))
+            {
+                hit.transform.GetComponent<MovingObject>().Highlight(highlightColor);
+            }
+        }
     }
+
     public override void Effect(int i)
     {
         switch (i)
@@ -45,7 +58,6 @@ public class NothingPersonnel : Ability
                         hit.transform.position = caster.transform.position;
                         caster.transform.position = hitPosition;
                         hit.transform.GetComponent<MovingObject>().TakeDamage(5, Element.NONE);
-                        //hit.transform.GetComponent<MovingObject>().Launch(-caster.facingDirection, 3);
                     }
                 }
                 Debug.Log(i);

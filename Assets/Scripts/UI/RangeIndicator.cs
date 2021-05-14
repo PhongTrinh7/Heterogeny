@@ -7,7 +7,7 @@ public class RangeIndicator : MonoBehaviour
     public BoxCollider2D selfCollider;
     public Color highlightColor;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    /*private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
         {
@@ -15,7 +15,7 @@ public class RangeIndicator : MonoBehaviour
             collision.gameObject.GetComponent<MovingObject>().Highlight(highlightColor);
         }
     }
-
+*/
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))

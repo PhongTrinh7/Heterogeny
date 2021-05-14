@@ -24,10 +24,12 @@ public abstract class Unit : MovingObject
 
     //General info.
     public string unitName;
-    public Image portrait;
+    public Portrait portrait;
+    public Portrait tempPortrait;
 
     //Character UI
     public EnergyBar energyBar;
+    public GameObject turnIndicator;
 
     //Unit stats.
     public int spd;
@@ -199,6 +201,23 @@ public abstract class Unit : MovingObject
         abilities[loadedAbility].Effect(i);
     }
 
+    public void PlaceHazardWave(EnvironmentalHazard hazard, List<List<Vector3>> waves, float waveDelay)
+    {
+        StartCoroutine(PlaceHazardWaveCoroutine(hazard, waves, waveDelay));
+    }
+
+    IEnumerator PlaceHazardWaveCoroutine(EnvironmentalHazard hazard, List<List<Vector3>> waves, float waveDelay)
+    {
+        foreach (List<Vector3> wave in waves)
+        {
+            foreach (Vector3 position in wave)
+            {
+                Instantiate(hazard, position, Quaternion.identity, ((Board)FindObjectOfType(typeof(Board))).transform);
+            }
+            yield return new WaitForSeconds(waveDelay);
+        }
+    }
+
     public virtual void UnitStateChange(UnitState newState)
     {
         state = newState;
@@ -209,6 +228,19 @@ public abstract class Unit : MovingObject
         state = priorState;
         UIManager.Instance.ListenForBattleUI(state == UnitState.ACTIVE);
         Debug.Log("Unit state is now: " + state);
+    }
+    public void ApplyStatus(StatusEffect status)
+    {
+        status.OnApply(this);
+    }
+
+    public void ApplyEffects()
+    {
+        foreach (StatusEffect status in statuses.ToArray())
+        {
+            status.Effect();
+            status.CheckTimer();
+        }
     }
 
     public void HandleCooldowns()
@@ -221,12 +253,14 @@ public abstract class Unit : MovingObject
 
     public virtual void StartTurn()
     {
+        turnIndicator.SetActive(true);
         CurrentEnergy = Mathf.Clamp(CurrentEnergy + energyRegen, 0, maxEnergy);
         HandleCooldowns();
     }
 
     public void EndTurn()
     {
+        turnIndicator.SetActive(false);
         state = UnitState.IDLE;
         BattleManager.Instance.currentUnits.RemoveAt(0);
         BattleManager.Instance.currentUnits.Add(this);
@@ -240,6 +274,7 @@ public abstract class Unit : MovingObject
 
     protected override void Death()
     {
+
         //Play animation or do whatever.
         
         //Inform the Battle Manager a Unit has died.

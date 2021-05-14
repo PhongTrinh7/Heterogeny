@@ -29,7 +29,6 @@ public class MovingObject : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        Debug.Log("I'm starting!");
 
         currentHealth = maxHealth;
 

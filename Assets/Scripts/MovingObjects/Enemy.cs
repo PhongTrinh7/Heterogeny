@@ -6,6 +6,8 @@ public class Enemy : Unit
 {
     protected int boardRows;
     protected int boardColumns;
+    protected float moveDelay = 1;
+    protected List<Vector3> staticUnwalkables;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -14,23 +16,26 @@ public class Enemy : Unit
         ChangeFacingDirection(new Vector2(-1, 0));
     }
 
-    public void SetUpBoardKnowledge(int rows, int columns)
+    public void SetUpBoardKnowledge(int rows, int columns, List<Vector3> unwalkables)
     {
         boardRows = rows;
         boardColumns = columns;
+        staticUnwalkables = unwalkables;
     }
 
-    public IEnumerator TurnSequence(List<Vector3> currentUnwalkables)
+    public virtual IEnumerator TurnSequence(List<Vector3> currentUnwalkables)
     {
         UnitStateChange(UnitState.BUSY);
-
-        //Find all players
-        GameObject[] targets = GameObject.FindGameObjectsWithTag("Player");
 
         currentUnwalkables.Remove(transform.position);
 
         //List of possible paths to a targets
         List<PathNode> chosenPath = new List<PathNode>();
+        GameObject target = null;
+
+        //Find all players
+        GameObject[] targets = GameObject.FindGameObjectsWithTag("Player");
+
         int minPathLength = boardRows * boardColumns;
 
         foreach (GameObject t in targets)
@@ -47,21 +52,57 @@ public class Enemy : Unit
             {
                 minPathLength = path.Count;
                 chosenPath = path;
+                target = t;
             }
         }
 
-        if (currentHealth <= 0)
+        /*
+        if (chosenPath == null || target == null)
         {
-            yield break;
+            Debug.Log("No possible routes to targets!");
+            EndTurn();
+            yield return null;
         }
 
-        /*foreach (PathNode pn in chosenPath)
+
+        //yield return new WaitForSecondsRealtime(1);
+        if (chosenPath.Count == 0)
+        {
+            yield return StartCoroutine(EnemyAbility(target));
+            yield return null;
+        }
+
+        foreach (PathNode pn in chosenPath)
         {
             Debug.Log(pn.coord);
+            facingDirection = Vector3.Normalize(pn.coord - transform.position);
+            ChangeFacingDirection(facingDirection);
+            yield return StartCoroutine(Move((int)facingDirection.x, (int)facingDirection.y));
+
+            if (currentHealth <= 0)
+            {
+                yield break;
+            }
+
+            if (Vector3.Distance(transform.position, target.transform.position) <= 1)
+            {
+                yield return StartCoroutine(EnemyAbility(target));
+            }
         }*/
 
-        //SmoothMovement(chosenPath[chosenPath.Count - 1].coord, 1);
         EndTurn();
         yield return null;
+    }
+
+    protected IEnumerator EnemyAbility(GameObject target)
+    {
+        ChangeFacingDirection(target.transform.position - transform.position);
+        if (ReadyAbility(0))
+        {
+            yield return new WaitForSecondsRealtime(moveDelay);
+            CastAbility();
+            Debug.Log(anim.GetCurrentAnimatorStateInfo(0).length);
+            yield return new WaitForSecondsRealtime(anim.GetCurrentAnimatorStateInfo(0).length + moveDelay);
+        }
     }
 }

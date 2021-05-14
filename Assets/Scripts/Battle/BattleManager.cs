@@ -117,7 +117,7 @@ public class BattleManager : Manager<BattleManager>
             else if (unit.CompareTag("Enemy"))
             {
                 Enemy enemy = (Enemy)unit;
-                enemy.SetUpBoardKnowledge(board.rows, board.columns);
+                enemy.SetUpBoardKnowledge(board.rows, board.columns, board.unwalkables);
                 enemyCount++;
             }
         }
@@ -128,7 +128,7 @@ public class BattleManager : Manager<BattleManager>
         currentUnwalkables.Clear();
         currentUnwalkables.AddRange(board.unwalkables);
 
-        foreach (MovingObject mo in movingObjects)
+        foreach (MovingObject mo in currentUnits)
         {
             currentUnwalkables.Add(mo.transform.position);
         }

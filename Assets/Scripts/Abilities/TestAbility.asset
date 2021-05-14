@@ -24,7 +24,7 @@ MonoBehaviour:
   cooldown: 0
   cooldownFill: 1
   onCooldown: 0
-  animationName: TestFlurryAttack
+  animationName: Ability2
   layermask:
     serializedVersion: 2
     m_Bits: 256
