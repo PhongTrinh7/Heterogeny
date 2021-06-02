@@ -64,10 +64,14 @@ MonoBehaviour:
   - {fileID: 2068667036111058926, guid: 6027c9c817b8a124bac7c8745bf97b03, type: 3}
   - {fileID: 2068667036111058926, guid: 6027c9c817b8a124bac7c8745bf97b03, type: 3}
   - {fileID: 2068667036111058926, guid: 6027c9c817b8a124bac7c8745bf97b03, type: 3}
-  wallTiles:
-  - {fileID: 6017281346346409882, guid: 86a0f55ce2cd7e64eb22467a4849b591, type: 3}
+  fieldProps:
   - {fileID: 8057993825433282393, guid: 5149729b70d0b044ba0ae9ac19f93492, type: 3}
+  - {fileID: 6017281346346409882, guid: 86a0f55ce2cd7e64eb22467a4849b591, type: 3}
+  - {fileID: 7178276071310056580, guid: 54237dc60a2bc5047b09a50e00c4b73d, type: 3}
+  - {fileID: 8331703964812101042, guid: 1c4ac70053ce56d4d8d1282a3d62459b, type: 3}
+  - {fileID: 368252757420891186, guid: 444d0e6bcda09b3449ac6d5c1a8829ec, type: 3}
   unwalkables: []
   backgroundMid: {fileID: 4435419453623608610, guid: 594ddd729a509d944bf8b6cccd6aa343,
     type: 3}
   units: []
+  props: []

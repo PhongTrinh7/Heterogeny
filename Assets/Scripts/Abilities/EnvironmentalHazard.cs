@@ -2,19 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnvironmentalHazard : MonoBehaviour
+public abstract class EnvironmentalHazard : Hitbox
 {
     public string localName;
     public string description;
-    public int damage;
-    //public List<StatusEffect> effects;
 
     public LayerMask environmentalHazard;
 
     public int duration;
     protected int durationTimer;
-
-    protected BoxCollider2D boxCollider;
 
     void Start()
     {

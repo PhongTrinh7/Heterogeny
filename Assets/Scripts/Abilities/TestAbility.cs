@@ -12,7 +12,7 @@ public class TestAbility : Ability
             case 0:
                 foreach (RaycastHit2D hit in GetRaycastHitsForward(0))
                 {
-                    if (hit.transform != null && hit.transform.CompareTag("Player") || hit.transform.CompareTag("Enemy"))
+                    if (hit.transform != null && hit.transform.gameObject.GetComponent<MovingObject>() != null)
                     {
                         hit.transform.GetComponent<MovingObject>().TakeDamage(5, Element.WATER);
                     }
@@ -25,8 +25,9 @@ public class TestAbility : Ability
             case 2:
                 foreach (RaycastHit2D hit in GetRaycastHitsForward(0))
                 {
-                    if (hit.transform != null && hit.transform.CompareTag("Player") || hit.transform.CompareTag("Enemy"))
+                    if (hit.transform != null && hit.transform.gameObject.GetComponent<MovingObject>() != null)
                     {
+                        Debug.Log(hit.transform.gameObject.name);
                         hit.transform.GetComponent<MovingObject>().TakeDamage(5, Element.NONE);
                         hit.transform.GetComponent<MovingObject>().Launch(caster.facingDirection, 3);
                     }

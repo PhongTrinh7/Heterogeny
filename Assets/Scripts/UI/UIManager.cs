@@ -73,7 +73,7 @@ public class UIManager : Manager<UIManager>
             {
                 abilityButtons[i].interactable = !activePlayer.abilities[i].onCooldown;
             }
-            //abilityButtons[i].GetComponent<Image>().sprite = activePlayer.abilities[i].sprite;
+            abilityButtons[i].GetComponent<Image>().sprite = activePlayer.abilities[i].sprite;
             abilityButtons[i].GetComponent<Image>().fillAmount = activePlayer.abilities[i].cooldownFill;
         }
     }

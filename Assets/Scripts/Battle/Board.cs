@@ -11,7 +11,7 @@ public class Board : MonoBehaviour
     //Board components to layout
     public GameObject[] outerWallTiles;
     public GameObject[] floorTiles;
-    public GameObject[] wallTiles;
+    public GameObject[] fieldProps;
     public List<Vector3> unwalkables;
     public GameObject backgroundMid;
 
@@ -22,6 +22,8 @@ public class Board : MonoBehaviour
     //misc
     private Transform boardHolder;            //A variable to store a reference to the transform of our Board object.
     private List<Vector3> gridPositions;      //A list of possible locations to place tiles.
+    public GameObject[] props;
+    public MovingObject[] movables;
 
     public void SetUp(Enemy[] enemies)
     {
@@ -34,7 +36,7 @@ public class Board : MonoBehaviour
         BoardSetup();
 
         //Instantiate a random number of wall tiles based on minimum and maximum, at randomized positions.
-        LayoutObjectAtRandom(wallTiles, 5, 8);
+        LayoutObjectAtRandom(fieldProps, 5, 8);
 
         //Instantiate the players.
         LayoutUnits();
@@ -125,11 +127,8 @@ public class Board : MonoBehaviour
             //Store position as unwalkable for pathfinding.
             unwalkables.Add(randomPosition);
 
-            //Choose a random tile from tileArray and assign it to tileChoice
-            GameObject tileChoice = tileArray[Random.Range(0, tileArray.Length)];
-
             //Instantiate tileChoice at the position returned by RandomPosition with no change in rotation
-            GameObject instance = Instantiate(tileChoice, randomPosition, Quaternion.identity);
+            GameObject instance = Instantiate(tileArray[Random.Range(0, tileArray.Length)], randomPosition, Quaternion.identity);
 
             //Set parent to board.
             instance.transform.SetParent(boardHolder);

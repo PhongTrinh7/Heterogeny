@@ -18,23 +18,19 @@ public class MovingObject : MonoBehaviour
     //Health
     public int maxHealth;
     public int currentHealth;
-    public HealthBar healthBar;
     public DamageNumber damageNumber;
 
     //Misc tuning
     public int moveSpeed;
     public int launchSpeed;
 
+    public Element weakness;
+
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
-
         currentHealth = maxHealth;
-
-        //UI setup.
-        healthBar.SetMaxHealth(maxHealth);
-        healthBar.SetCurrentHealth(currentHealth);
     }
 
     //Cast a line to check for specific layermasks.
@@ -93,9 +89,8 @@ public class MovingObject : MonoBehaviour
 
     public virtual void TakeDamage(int damage, Element e)
     {
-        currentHealth -= damage;
-        healthBar.SetCurrentHealth(currentHealth);
-        Instantiate(damageNumber, transform.position, Quaternion.identity).SetDamageVisual(damage, e, false);
+        if (e == weakness) currentHealth--;
+        currentHealth--;
 
         if (currentHealth <= 0)
         {
@@ -115,6 +110,6 @@ public class MovingObject : MonoBehaviour
 
     protected virtual void Death()
     {
-        Destroy(this);
+        Destroy(this.gameObject);
     }
 }

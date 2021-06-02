@@ -14,9 +14,6 @@ public class Tooltip : MonoBehaviour
         //Activate the tooltip
         gameObject.SetActive(true);
 
-        //Get ability for corresponding button from the Battle Manager
-        //Ability ability = BattleManager.Instance.activeUnit.abilitiesReference[i];
-
         tooltipText.text = BattleManager.Instance.activeUnit.abilities[i].Description();
         Vector2 backgroundSize = new Vector2(tooltipText.preferredWidth + padding, tooltipText.preferredHeight + padding);
         background.sizeDelta = backgroundSize;
@@ -26,14 +23,4 @@ public class Tooltip : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-
-    /*public void Update()
-    {
-        if (isActiveAndEnabled)
-        {
-            tooltipText.text = ability.Description();
-            Vector2 backgroundSize = new Vector2(tooltipText.preferredWidth + padding, tooltipText.preferredHeight + padding);
-            background.sizeDelta = backgroundSize;
-        }
-    }*/
 }

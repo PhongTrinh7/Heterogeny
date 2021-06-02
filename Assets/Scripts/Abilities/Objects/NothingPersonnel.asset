@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   caster: {fileID: 0}
   abilitySlot: 1
-  sprite: {fileID: 0}
+  sprite: {fileID: -5239188096445404863, guid: b927330e6ef9a8a4789a4a4181535135, type: 3}
   abilityName: Nothing Personnel
   description: teleports behind you
   initialDamage: 1

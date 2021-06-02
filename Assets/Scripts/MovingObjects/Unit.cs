@@ -28,6 +28,7 @@ public abstract class Unit : MovingObject
     public Portrait tempPortrait;
 
     //Character UI
+    public HealthBar healthBar;
     public EnergyBar energyBar;
     public GameObject turnIndicator;
 
@@ -60,10 +61,10 @@ public abstract class Unit : MovingObject
     public int moveCost;
 
     //Status Afflictions
-    public HorizontalLayoutGroup statusEffectContainer;
+    public GameObject statusEffectContainer;
     public List<StatusEffect> statuses;
-    bool bStun;
-    bool bImmobile;
+    public bool stunned;
+    public bool immobilized;
 
     //Event for variable changes.
     UnityEvent OnVariableChange = new UnityEvent();
@@ -74,6 +75,8 @@ public abstract class Unit : MovingObject
         base.Start();
 
         //UI setup.
+        healthBar.SetMaxHealth(maxHealth);
+        healthBar.SetCurrentHealth(currentHealth);
         energyBar.SetMaxEnergy(maxEnergy);
 
         OnVariableChange.AddListener(UpdateEnergy);
@@ -105,7 +108,7 @@ public abstract class Unit : MovingObject
     //Move takes parameters for x direction, y direction and a RaycastHit2D to check collision.
     public IEnumerator Move(int xDir, int yDir)
     {
-        if (bStun || bImmobile)
+        if (stunned || immobilized)
         {
             Debug.Log("Can't move");
             yield break;
@@ -146,7 +149,7 @@ public abstract class Unit : MovingObject
 
     public void ChangeFacingDirection(Vector2 direction)
     {
-        if (bStun)
+        if (stunned)
         {
             return;
         }
@@ -155,6 +158,19 @@ public abstract class Unit : MovingObject
         facingDirection = direction;
         anim.SetFloat("Horizontal", direction.x);
         anim.SetFloat("Vertical", direction.y);
+    }
+
+    public override void TakeDamage(int damage, Element e)
+    {
+        if (e == weakness) damage *= 2;
+        currentHealth -= damage;
+        healthBar.SetCurrentHealth(currentHealth);
+        Instantiate(damageNumber, transform.position, Quaternion.identity).SetDamageVisual(damage, e, false);
+
+        if (currentHealth <= 0)
+        {
+            Death();
+        }
     }
 
     public bool ReadyAbility(int i)
@@ -256,6 +272,7 @@ public abstract class Unit : MovingObject
         turnIndicator.SetActive(true);
         CurrentEnergy = Mathf.Clamp(CurrentEnergy + energyRegen, 0, maxEnergy);
         HandleCooldowns();
+        ApplyEffects();
     }
 
     public void EndTurn()
