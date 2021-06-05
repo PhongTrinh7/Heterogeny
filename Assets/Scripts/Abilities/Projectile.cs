@@ -7,20 +7,23 @@ public class Projectile : Hitbox
     public float duration;
     public bool pierce;
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collision.gameObject.CompareTag("Wall"))
+        if (collider.gameObject.CompareTag("Wall"))
         {
             Destroy(this.gameObject);
         }
 
-        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Player"))
+        if (collider.gameObject.GetComponent<MovingObject>() != null)
         {
-            foreach (StatusEffect effect in effects)
+            if (collider.gameObject.CompareTag("Enemy") || collider.gameObject.CompareTag("Player"))
             {
-                collision.gameObject.GetComponent<Unit>().ApplyStatus(Object.Instantiate(effect));
+                foreach (StatusEffect effect in effects)
+                {
+                    collider.gameObject.GetComponent<Unit>().ApplyStatus(Object.Instantiate(effect));
+                }
             }
-            collision.gameObject.GetComponent<Unit>().TakeDamage(damage, element);
+            collider.gameObject.GetComponent<MovingObject>().TakeDamage(damage, element);
 
             if (!pierce)
             {

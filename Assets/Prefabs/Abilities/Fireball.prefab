@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 2
   m_Sprite: {fileID: 3636900024169929489, guid: 8552db6815056134bb8bf5ddabb5ec7d,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -166,9 +166,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   element: 1
+  boxCollider: {fileID: 0}
   effects:
   - {fileID: 3924846631552830372, guid: 6daee8ca36ad16c4bb8ce2cdb9de144b, type: 3}
   - {fileID: 3235822267810759343, guid: 4de985b34e506cf4ea68a61b292a38fe, type: 3}
   - {fileID: 2556184397697558837, guid: c87a774bdc97c1a41a4d89b3abb592f5, type: 3}
+  anim: {fileID: 0}
   duration: 3
   pierce: 0

@@ -44,6 +44,8 @@ public class BattleManager : Manager<BattleManager>
 
     public void StartBattle(Board[] boards, Enemy[] enemies)
     {
+        AudioManager.Instance.Play("BattleTheme");
+
         //Set up the playing field.
         board = Instantiate(boards[Random.Range(0, boards.Length)]);
         board.SetUp(enemies);
@@ -80,6 +82,9 @@ public class BattleManager : Manager<BattleManager>
 
         //Center camera on active unit
         cameraController.CameraLookAt(activeUnit);
+
+        //Update hazards
+        UpdateEnvironmentalHazards();
 
         //Updates pathfinding based on current unit positions.
         UpdateUnwalkables();
@@ -128,9 +133,17 @@ public class BattleManager : Manager<BattleManager>
         currentUnwalkables.Clear();
         currentUnwalkables.AddRange(board.unwalkables);
 
-        foreach (MovingObject mo in currentUnits)
+        foreach (MovingObject mo in FindObjectsOfType(typeof(MovingObject)))
         {
             currentUnwalkables.Add(mo.transform.position);
+        }
+    }
+
+    public void UpdateEnvironmentalHazards()
+    {
+        foreach (EnvironmentalHazard hazard in FindObjectsOfType(typeof(EnvironmentalHazard)))
+        {
+            hazard.DurationCountDown();
         }
     }
 

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Fireball")]
-public class MajesticFlameDestroyer : Ability
+[CreateAssetMenu(fileName = "MajesticDestroyerFlame")]
+public class MajesticDestroyerFlame : Ability
 {
     public GameObject fireball;
     public int projectileSpeed;

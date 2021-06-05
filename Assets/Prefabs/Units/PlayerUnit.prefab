@@ -1097,17 +1097,18 @@ MonoBehaviour:
   ogColor: {r: 1, g: 1, b: 1, a: 1}
   maxHealth: 50
   currentHealth: 1
-  healthBar: {fileID: 6026781698483514553}
   damageNumber: {fileID: 8887227401818310891, guid: 2822bbe08064d1b44b0bc34c0a15f75d,
     type: 3}
   moveSpeed: 2
   launchSpeed: 5
+  weakness: 0
   state: 0
   priorState: 2
   unitName: PlayerUnit
   portrait: {fileID: 5737155642382049778, guid: 5662638ba1d09a94c8ae36d90772ab28,
     type: 3}
   tempPortrait: {fileID: 0}
+  healthBar: {fileID: 6026781698483514553}
   energyBar: {fileID: 6007175448465538509}
   turnIndicator: {fileID: 5857991398526900135}
   spd: 0
@@ -1116,7 +1117,8 @@ MonoBehaviour:
   abilitiesReference:
   - {fileID: 11400000, guid: 903df38076bd2114285b96470a4e42c0, type: 2}
   - {fileID: 11400000, guid: efc6c712702ef41498be65a7f4b5c6c7, type: 2}
-  - {fileID: 11400000, guid: 262d77d4c77771645839fa1229430a54, type: 2}
+  - {fileID: 11400000, guid: 31e2e878a737c9149b417d4637555450, type: 2}
+  - {fileID: 11400000, guid: 14dc162ca4b9d194c9b0ddbff84181e6, type: 2}
   abilities: []
   facingDirection: {x: 0, y: 0}
   moveCost: 1

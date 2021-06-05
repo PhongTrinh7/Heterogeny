@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public static CameraController Instance;
+
     //Camera speed
     public float movementSpeed;
     public float movementTime;
@@ -30,6 +32,10 @@ public class CameraController : MonoBehaviour
     public Vector3 dragStart;
     public Vector3 dragCurrent;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -127,6 +133,31 @@ public class CameraController : MonoBehaviour
     {
         newPosition.x = Mathf.Clamp(target.transform.position.x, 0, xCamBound);
         newPosition.y = Mathf.Clamp(target.transform.position.y, 0, yCamBound);
+    }
+
+    public void Shake(float duration, float magnitude)
+    {
+        StartCoroutine(ShakeCoroutine(duration, magnitude));
+    }
+
+    private IEnumerator ShakeCoroutine(float duration, float magnitude)
+    {
+        Vector3 ogLocalPos = mainCam.transform.localPosition;
+        float elasped = 0f;
+
+        while (elasped < duration)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+
+            mainCam.transform.localPosition = new Vector3(x, y, ogLocalPos.z);
+
+            elasped += Time.deltaTime;
+
+            yield return null;
+        }
+
+        mainCam.transform.localPosition = ogLocalPos;
     }
 }
 

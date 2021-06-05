@@ -89,8 +89,11 @@ public class MovingObject : MonoBehaviour
 
     public virtual void TakeDamage(int damage, Element e)
     {
-        if (e == weakness) currentHealth--;
-        currentHealth--;
+        damage = 1;
+        if (e == weakness) damage = 2;
+        currentHealth -= damage;
+
+        Instantiate(damageNumber, transform.position, Quaternion.identity).SetDamageVisual(damage, e, false);
 
         if (currentHealth <= 0)
         {

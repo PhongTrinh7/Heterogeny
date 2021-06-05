@@ -16,15 +16,18 @@ public class Hitbox : MonoBehaviour
         boxCollider.enabled = !boxCollider.enabled;
     }
 
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
-    {        
-        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Player"))
+    protected virtual void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.GetComponent<MovingObject>() != null)
         {
-            foreach (StatusEffect effect in effects)
+            if (collider.gameObject.CompareTag("Enemy") || collider.gameObject.CompareTag("Player"))
             {
-                collision.gameObject.GetComponent<Unit>().ApplyStatus(Object.Instantiate(effect));
+                foreach (StatusEffect effect in effects)
+                {
+                    collider.gameObject.GetComponent<Unit>().ApplyStatus(Object.Instantiate(effect));
+                }
             }
-            collision.gameObject.GetComponent<Unit>().TakeDamage(damage, element);
+            collider.gameObject.GetComponent<MovingObject>().TakeDamage(damage, element);
         }
     }
 }

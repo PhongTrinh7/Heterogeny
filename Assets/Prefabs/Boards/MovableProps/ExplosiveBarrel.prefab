@@ -153,7 +153,8 @@ MonoBehaviour:
   ogColor: {r: 0, g: 0, b: 0, a: 0}
   maxHealth: 3
   currentHealth: 0
-  damageNumber: {fileID: 0}
+  damageNumber: {fileID: 8887227401818310891, guid: 2822bbe08064d1b44b0bc34c0a15f75d,
+    type: 3}
   moveSpeed: 2
   launchSpeed: 5
   weakness: 1
